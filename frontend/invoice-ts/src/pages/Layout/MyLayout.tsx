@@ -7,7 +7,7 @@ import {
   HomeOutlined,
   LogoutOutlined,
 } from "@ant-design/icons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { clearToken } from "../../store/modules/user";
 
 const { Header, Content, Footer } = Layout;
@@ -39,6 +39,7 @@ const MyLayout = (props: Props) => {
   const navigator = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
+  const name = useSelector((state: any) => state.user.userInfo.username);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -90,7 +91,7 @@ const MyLayout = (props: Props) => {
           onConfirm={onConfirm}
         >
           {/* <span style={{ color: "white" }}> {name} LogOut</span> */}
-          <span style={{ color: "white" }}> name LogOut</span>
+          <span style={{ color: "white" }}> {name} LogOut</span>
         </Popconfirm>
       </Header>
       <Content
