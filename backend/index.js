@@ -3,9 +3,26 @@ import { PORT, mongoDBURL } from "./config.js";
 import mongoose from "mongoose";
 import billRouter from "./routes/billRoute.js";
 import userRouter from "./routes/userRoute.js";
+import cors from "cors";
+import { verifyToken } from "./jwt/jwt.js";
 
 const app = express();
 
+// Allow requests only from a specific origin
+// Allow requests with specific methods
+// Allow requests with specific headers
+app.use(
+  cors({
+    // origin: "*",
+    origin: "http://localhost:3000",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
+    allowedHeaders: "Content-Type, Authorization",
+    credentials: true,
+  })
+);
+app.use(verifyToken);
+
+// routes
 app.use("/bill", billRouter);
 app.use("/user", userRouter);
 
