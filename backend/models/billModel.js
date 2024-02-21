@@ -2,15 +2,51 @@ import mongoose from "mongoose";
 
 const billSchema = new mongoose.Schema(
   {
-    title: {
+    InvoiceCode: {
       type: String,
       required: true,
     },
-    amount: {
-      type: Number,
+    InvoiceNum: {
+      type: String,
       required: true,
     },
-    type: {
+    InvoiceDate: {
+      type: String,
+      required: true,
+    },
+    PurchaserName: {
+      type: String,
+      required: true,
+    },
+    PurchaserRegisterNum: {
+      type: String,
+      required: true,
+    },
+    SellerName: {
+      type: String,
+      required: true,
+    },
+    SellerRegisterNum: {
+      type: String,
+      required: true,
+    },
+    TotalAmount: {
+      type: String,
+      required: true,
+    },
+    TotalTax: {
+      type: String,
+      required: true,
+    },
+    InvoiceType: {
+      type: String,
+      required: true,
+    },
+    InvoiceTag: {
+      type: String,
+      required: true,
+    },
+    Remarks: {
       type: String,
       required: true,
     },
@@ -18,13 +54,9 @@ const billSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    initialDate: {
-      type: Date,
-      required: true,
-    },
-    approvalDate: {
-      type: Date,
-      required: false,
+    launcher: {
+      type: String,
+      requeired: true,
     },
   },
   {
@@ -32,4 +64,5 @@ const billSchema = new mongoose.Schema(
   }
 );
 
-export const Bill = mongoose.model("Bill", billSchema);
+const Bill = mongoose.model("Bill", billSchema);
+export default Bill;

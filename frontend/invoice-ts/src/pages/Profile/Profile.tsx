@@ -1,25 +1,29 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchUserInfo } from "../../store/modules/user";
+import { useSelector } from "react-redux";
+
+import { Descriptions, DescriptionsProps } from "antd";
 
 type Props = {};
 
 const Profile = (props: Props) => {
-  const dispatch = useDispatch();
-  const name = useSelector((state: any) => state.user.userInfo.username);
-
-  useEffect(() => {
-    console.log("Profile");
-    const loadUserInfo = async () => {
-      await dispatch(fetchUserInfo());
-    };
-    loadUserInfo();
-  }, [dispatch]);
+  const userInfo = useSelector((state: any) => state.user.userInfo);
+  const items: DescriptionsProps["items"] = [];
+  for (let key in userInfo) {
+    if (key !== "password") {
+      items.push({ label: key, children: userInfo[key] });
+    } else {
+      items.push({ label: key, children: "******" });
+    }
+  }
 
   return (
     <div>
       Profile
-      <h1>{name}</h1>
+      <Descriptions
+        title="User Profile"
+        bordered
+        column={{ xs: 1, sm: 2, md: 3, lg: 3, xl: 4, xxl: 4 }}
+        items={items}
+      />
     </div>
   );
 };

@@ -3,9 +3,7 @@ import {
   Breadcrumb,
   Form,
   Button,
-  Radio,
   Input,
-  Upload,
   Space,
   Select,
   message,
@@ -15,35 +13,89 @@ import { InboxOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Dragger from "antd/es/upload/Dragger";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import TextArea from "antd/es/input/TextArea";
+import { addOneBillAPI } from "../../apis/bill";
+import { useSelector } from "react-redux";
 
 type Props = {};
+type ResultsType = {
+  InvoiceCode: string;
+  InvoiceNum: string;
+  InvoiceDate: string;
+  PurchaserName: string;
+  PurchaserRegisterNum: string;
+  SellerName: string;
+  SellerRegisterNum: string;
+  TotalAmount: string;
+  TotalTax: string;
+  // CommodityName: { [key: string]: any };
+  InvoiceType: string;
+  InvoiceTag: string;
+  Remarks: string;
+  [key: string]: any; // This is the index signature
+};
 
 // antd
 const { Option } = Select;
 
-const onChange = (value: any) => {
-  console.log("uploading ~~~ ");
-  console.log(value);
-  // setImageList(value.fileList);
-};
-
 const Launch = (props: Props) => {
-  const [imgUrl, setImageUrl] = useState("");
+  const username = useSelector((state: any) => state.user.userInfo.username);
+  const [results, setResults] = useState<ResultsType>({
+    InvoiceCode: "",
+    InvoiceNum: "",
+    InvoiceDate: "",
+    PurchaserName: "",
+    PurchaserRegisterNum: "",
+    SellerName: "",
+    SellerRegisterNum: "",
+    TotalAmount: "",
+    TotalTax: "",
+    // CommodityName: {
+    //   row: "",
+    //   word: "",
+    // },
+    InvoiceType: "",
+    InvoiceTag: "",
+    Remarks: "",
+  });
   const [form] = Form.useForm();
+  useEffect(() => {
+    form.setFieldsValue(results);
+  }, [results, form]);
 
-  const getBase64 = (file: any, callback: any) => {
-    const reader = new FileReader();
-    reader.addEventListener("load", () => callback(reader.result));
-    reader.readAsDataURL(file);
+  // const onChange = (values: any) => {
+  // };
+
+  const onFinish = (values: any) => {
+    console.log("Received values of form: ", values);
+    const submit = async () => {
+      try {
+        const data = { ...values, launcher: username, status: "pending" };
+        const res = await addOneBillAPI(data);
+        message.success("提交成功");
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+        message.error("提交失败，请重试");
+      }
+    };
+    submit();
   };
 
+  const getBase64 = (file: any): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.addEventListener("load", () => resolve(reader.result as string));
+      reader.addEventListener("error", (error) => reject(error));
+      reader.readAsDataURL(file);
+    });
+  };
   // const handlePicUpload = async ({ file, onSuccess, onError }) => {
   const handlePicUpload = async (props: any) => {
     try {
       const { file, onSuccess } = props;
-      const img = imgUrl;
-
+      const img = await getBase64(file);
       // 自定义请求头等配置
       const headers = {
         Accept: "application/json",
@@ -51,7 +103,6 @@ const Launch = (props: Props) => {
       };
       const response = await axios.post(
         "https://aip.baidubce.com/rest/2.0/ocr/v1/vat_invoice",
-        // "/",
         {
           image: img,
           access_token:
@@ -60,26 +111,33 @@ const Launch = (props: Props) => {
         { headers }
       );
       // 上传成功后调用 onSuccess
-      onSuccess("上传成功");
-      // response.data;
-      console.log(response.data);
+      if (response.data.words_result !== undefined) {
+        console.log("words_result in response.data ");
+        onSuccess("上传成功，请二次检查识别内容后再提交申请");
+
+        const tem = {} as ResultsType;
+        for (let key in results) {
+          tem[key] = response.data.words_result[key];
+        }
+        setResults(tem);
+      } else {
+        console.log("words_result not in response.data ");
+      }
 
       // 更新组件状态
     } catch (error) {
       // 上传失败后调用 onError
-      // onError(error);
       console.log(error);
       message.error("上传失败，请重试");
     }
   };
-  const beforeUpload = (file: File) => {
-    // console.log(file);
-    getBase64(file, (imageUrl: any) => {
-      setImageUrl(imageUrl);
-    });
-    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+  const beforeUpload = async (file: File) => {
+    const isJpgOrPng =
+      file.type === "image/jpeg" ||
+      file.type === "image/png" ||
+      file.type === "image/jpg";
     if (!isJpgOrPng) {
-      message.error("只能上传 JPG/PNG 格式的图片!");
+      message.error("只能上传 JPG/JPEG/PNG 格式的图片!");
     }
     return isJpgOrPng;
   };
@@ -118,60 +176,30 @@ const Launch = (props: Props) => {
       <Form
         labelCol={{ span: 4 }}
         wrapperCol={{ span: 16 }}
-        // initialValues={}
-        // onFinish={}
-        // form={}
+        initialValues={{ results }}
+        // onChange={onChange}
+        onFinish={onFinish}
+        form={form}
       >
-        <Form.Item
-          label="标题"
-          name="title"
-          rules={[{ required: true, message: "请输入文章标题" }]}
-        >
-          <Input placeholder="请输入文章标题" style={{ width: 400 }} />
-        </Form.Item>
-        <Form.Item
-          label="频道"
-          name="channel_id"
-          rules={[{ required: true, message: "请选择文章频道" }]}
-        >
-          <Select placeholder="请选择文章频道" style={{ width: 400 }}>
-            {/* {channeList.map((item) => (
-                <Option key={item.id} value={item.id}>
-                  {item.name}
-                </Option>
-              ))} */}
-            {[
-              { id: 1, name: "skye" },
-              { id: 2, name: "syo" },
-            ].map((item) => (
-              <Option key={item.id} value={item.id}>
-                {item.name}
-              </Option>
-            ))}
-            <Option value={0}>推荐</Option>
-          </Select>
-        </Form.Item>
-
-        <Form.Item
-          label="内容"
-          name="content"
-          rules={[{ required: true, message: "请输入文章内容" }]}
-        >
-          <Input.TextArea
-            placeholder="请输入文章内容"
-            style={{ width: 400, height: 200 }}
-          />
-          {/* <ReactQuill
-            className="check-quill"
-            theme="snow"
-            placeholder="type content here"
-          /> */}
-        </Form.Item>
+        {Object.keys(results).map((item) => (
+          <Form.Item
+            label={item}
+            name={item}
+            key={item}
+            rules={[{ required: true, message: "内容不能为空" }]}
+          >
+            {item === "Remarks" ? (
+              <TextArea style={{ width: 300, height: 200 }} />
+            ) : (
+              <Input style={{ width: 400 }} />
+            )}
+          </Form.Item>
+        ))}
 
         <Form.Item wrapperCol={{ offset: 4 }}>
           <Space>
             <Button size="large" type="primary" htmlType="submit">
-              发布文章
+              下一步
             </Button>
           </Space>
         </Form.Item>

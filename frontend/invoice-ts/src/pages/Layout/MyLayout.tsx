@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router";
-import { Breadcrumb, Layout, Menu, theme, Popconfirm } from "antd";
+import { Breadcrumb, Layout, Menu, theme, Popconfirm, Button } from "antd";
 import {
   DiffOutlined,
   EditOutlined,
@@ -8,7 +8,7 @@ import {
   LogoutOutlined,
 } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { clearToken } from "../../store/modules/user";
+import { clearToken, fetchUserInfo } from "../../store/modules/user";
 
 const { Header, Content, Footer } = Layout;
 const items = [
@@ -40,9 +40,14 @@ const MyLayout = (props: Props) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const name = useSelector((state: any) => state.user.userInfo.username);
+  console.log("name: ", name);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+
+  useEffect(() => {
+    dispatch(fetchUserInfo());
+  }, [dispatch]);
 
   const onMenuClick = (route: any) => {
     const path = route.key;
@@ -91,7 +96,11 @@ const MyLayout = (props: Props) => {
           onConfirm={onConfirm}
         >
           {/* <span style={{ color: "white" }}> {name} LogOut</span> */}
-          <span style={{ color: "white" }}> {name} LogOut</span>
+          <span style={{ color: "white", fontWeight: "bold" }}> {name}</span>
+          <Button style={{ color: "black", marginLeft: "10px" }}>
+            <LogoutOutlined /> LogOut
+          </Button>
+          {/* <Button style={{ color: "gray" }}> LogOut</Button> */}
         </Popconfirm>
       </Header>
       <Content

@@ -1,6 +1,6 @@
-import { Button, Card, Form, Input, message } from "antd";
+import { Avatar, Button, Card, Form, Input, message } from "antd";
 import "./index.scss";
-import { request } from "../../utils";
+import { AccountBookOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { fetchLogin } from "../../store/modules/user";
@@ -17,7 +17,20 @@ const Login = (props: Props) => {
   return (
     <div className="login">
       <Card className="login-container">
-        <img className="login-logo" alt="logo" />
+        {/* <img
+          className="login-logo"
+          // src="../../assets/1x1_small.jpg"
+          src="../../assets/1x1_small.jpg"
+          alt="logo"
+        /> */}
+        {/* <Avatar size={64} src="../../assets/1x1_small.jpg1x1" /> */}
+        <div style={{ textAlign: "center", paddingBottom: "10px" }}>
+          <Avatar
+            style={{ backgroundColor: "azure", verticalAlign: "middle" }}
+            size={64}
+            icon={<AccountBookOutlined style={{ color: "purple" }} />}
+          />
+        </div>
         <Form validateTrigger="onBlur" onFinish={onFinish}>
           <Form.Item
             label="Username"

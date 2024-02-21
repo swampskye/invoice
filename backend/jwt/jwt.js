@@ -22,7 +22,7 @@ const verifyToken = (req, res, next) => {
   const token = req.headers["authorization"];
 
   // Specify routes that don't require a token
-  const excludedRoutes = ["/user/login", "/user/"];
+  const excludedRoutes = ["/user/login", "/bill/add", "/bill/all"];
 
   if (!excludedRoutes.includes(req.path)) {
     // Check for the presence of the token
@@ -35,7 +35,6 @@ const verifyToken = (req, res, next) => {
       if (err) {
         return res.status(401).json({ error: "Token is not valid" });
       }
-
       // Attach the decoded user information to the request object for later use
       req.user = decoded;
       next();

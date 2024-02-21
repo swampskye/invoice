@@ -1,0 +1,80 @@
+{
+  "words_result": {
+    "InvoiceNumDigit": "",
+    "CommodityUnit": [],
+    "PurchaserAddress": "北京市海设区北清路08号院24号楼D嘉4层080050-06577877",
+    "SheetNum": "第二联：抵扣联",
+    "CommodityType": [],
+    "TotalAmount": "00.00",
+    "Checker": "",
+    "PurchaserBank": "临南银行股份省限安斯北京海汉费应支行110912900710000",
+    "Agent": "是",
+    "Password": "0>03197C34/065200>963-56-/004><7516/>2-7-261<4787+51201*3**-+/81>3444240>9-3<52-/81-/*7/27/<+-1/06105110-",
+    "InvoiceTypeOrg": "北京增值税专用发票",
+    "InvoiceCodeConfirm": "1100162160",
+    "TotalTax": "190.00",
+    "ServiceType": "服务",
+    "CommodityTaxRate": [
+      {
+        "row": "1",
+        "word": "3%"
+      }
+    ],
+    "CommodityTax": [
+      {
+        "row": "1",
+        "word": "3.00"
+      }
+    ],
+    "SellerBank": "320170700000817860",
+    "Remarks": "代开业业税号110110300001001场开道有算助京市海裕文应股有限公司",
+    "SellerAddress": "北新市市曲区道府中路76号2座2.1199室030-69657686",
+    "NoteDrawer": "自助代开",
+    "InvoiceTag": "代开",
+    "InvoiceNumConfirm": "02090190",
+    "OnlinePay": "",
+    "Payee": "",
+    "CommodityName": [
+      {
+        "row": "1",
+        "word": "设计服务创业指南书设计排版费"
+      }
+    ],
+    "CommodityVehicleType": [],
+    "InvoiceCode": "1100182160",
+    "AmountInWords": "玖拾捌圆整",
+    "AmountInFiguers": "98.00",
+    "City": "",
+    "InvoiceType": "专用发票",
+    "CommodityEndDate": [],
+    "PurchaserName": "北县影科技有限公司",
+    "InvoiceDate": "2017年07月05日",
+    "CommodityNum": [
+      {
+        "row": "1",
+        "word": "1"
+      }
+    ],
+    "PurchaserRegisterNum": "9111010832166868M7",
+    "MachineCode": "",
+    "CommodityPlateNum": [],
+    "CheckCode": "",
+    "SellerRegisterNum": "110150000M01049",
+    "CommodityPrice": [
+      {
+        "row": "1",
+        "word": "0000.00"
+      }
+    ],
+    "CommodityStartDate": [],
+    "SellerName": "柔国税局第一税务所代开纳税人3",
+    "CommodityAmount": [
+      {
+        "row": "1",
+        "word": "6690.90"
+      }
+    ],
+    "Province": "北京",
+    "InvoiceNum": "02090190"
+  }
+}
