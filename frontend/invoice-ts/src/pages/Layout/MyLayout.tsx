@@ -39,7 +39,8 @@ const MyLayout = (props: Props) => {
   const navigator = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
-  const name = useSelector((state: any) => state.user.userInfo.username);
+  const userInfo = useSelector((state: any) => state.user.userInfo);
+  const name = userInfo.username;
   console.log("name: ", name);
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -95,7 +96,10 @@ const MyLayout = (props: Props) => {
           cancelText="Cancel"
           onConfirm={onConfirm}
         >
-          {/* <span style={{ color: "white" }}> {name} LogOut</span> */}
+          <span style={{ color: "white", fontWeight: "bold" }}>
+            {" "}
+            {userInfo.role === "admin" ? "ADMIN" : "USER"}
+          </span>
           <span style={{ color: "white", fontWeight: "bold" }}> {name}</span>
           <Button style={{ color: "black", marginLeft: "10px" }}>
             <LogoutOutlined /> LogOut

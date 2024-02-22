@@ -143,18 +143,19 @@ const Launch = (props: Props) => {
   };
   return (
     <Card
-      title={
-        <Breadcrumb
-          items={[
-            { title: <Link to={"/"}>Home</Link> },
-            // { title: `${articleId ? "Check" : "publish"}` },
-          ]}
-        />
-      }
+    // title={
+    //   <Breadcrumb
+    //     items={[
+    //       { title: <Link to={"/"}>请上传清晰的发票</Link> },
+    //       // { title: `${articleId ? "Check" : "publish"}` },
+    //     ]}
+    //   />
+    // }
     >
       <h2 style={{ textAlign: "center" }}>请上传清晰的发票</h2>
 
       <Dragger
+        style={{ marginBottom: 20 }}
         maxCount={1}
         customRequest={handlePicUpload}
         beforeUpload={beforeUpload}
@@ -170,8 +171,6 @@ const Launch = (props: Props) => {
           uploading company data or other banned files.
         </p>
       </Dragger>
-
-      <hr />
 
       <Form
         labelCol={{ span: 4 }}
@@ -199,7 +198,7 @@ const Launch = (props: Props) => {
         <Form.Item wrapperCol={{ offset: 4 }}>
           <Space>
             <Button size="large" type="primary" htmlType="submit">
-              下一步
+              提交
             </Button>
           </Space>
         </Form.Item>

@@ -8,8 +8,6 @@ import router from "../../router";
 // 2. timeout
 // 3. interceptor
 
-// axios.get("http://localhost:9999/").then((res) => {
-
 const request = axios.create({
   baseURL: "http://localhost:9999",
   timeout: 5000,

@@ -14,4 +14,22 @@ const addOneBillAPI = (data: any) => {
   });
 };
 
-export { getAllBillsAPI, addOneBillAPI };
+const acceptOneBillAPI = (id: string) => {
+  return request({
+    url: "/bill/accept",
+    method: "PUT",
+    // data: id,
+    params: { id: id },
+  });
+};
+
+const rejectOneBillAPI = (id: string) => {
+  return request({
+    url: "/bill/reject",
+    method: "PUT",
+    params: { id: id },
+    // query: { id: id },
+  });
+};
+
+export { getAllBillsAPI, addOneBillAPI, acceptOneBillAPI, rejectOneBillAPI };

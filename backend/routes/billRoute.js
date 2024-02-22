@@ -58,4 +58,39 @@ router.post("/add", async (req, res) => {
   }
 });
 
+// update bill status to "accepted"  "rejected"
+router.put("/accept", async (req, res) => {
+  try {
+    // return res.status(200).json(req.params._id);
+    const bill = await Bill.findById(req.query.id);
+    console.log(req);
+    console.log("id", req.query.id);
+    console.log("bill:", bill);
+
+    if (bill) {
+      bill.status = "accepted";
+      const updatedBill = await bill.save();
+      return res.status(200).json(updatedBill);
+    }
+    return res.status(404).json({ message: "Bill not found" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+// update bill status to "rejected"
+router.put("/reject", async (req, res) => {
+  try {
+    const bill = await Bill.findById(req.query.id);
+    console.log(bill);
+    if (bill) {
+      bill.status = "rejected";
+      const updatedBill = await bill.save();
+      return res.status(200).json(updatedBill);
+    }
+    return res.status(404).json({ message: "Bill not found" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 export default router;

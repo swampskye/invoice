@@ -22,7 +22,7 @@ const verifyToken = (req, res, next) => {
   const token = req.headers["authorization"];
 
   // Specify routes that don't require a token
-  const excludedRoutes = ["/user/login", "/bill/add", "/bill/all"];
+  const excludedRoutes = ["/user/login", "/bill/add"];
 
   if (!excludedRoutes.includes(req.path)) {
     // Check for the presence of the token
