@@ -1,6 +1,7 @@
 import axios from "axios";
 import { getToken, removeToken } from "../../utils/token";
 import router from "../../router";
+import { message } from "antd";
 
 // axios
 
@@ -37,6 +38,7 @@ request.interceptors.response.use(
       removeToken();
       router.navigate("/login");
       window.location.reload();
+      message.error(error.response.data.message);
     }
     return Promise.reject(error);
   }

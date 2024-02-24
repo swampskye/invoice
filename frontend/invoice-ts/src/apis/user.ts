@@ -8,6 +8,14 @@ const loginApi = (credential: any) => {
   });
 };
 
+const registerApi = (credential: any) => {
+  return request({
+    url: "/user/register",
+    method: "POST",
+    data: credential,
+  });
+};
+
 const getProfileAPI = () => {
   return request({
     url: "/user/profile",
@@ -22,4 +30,4 @@ const getAllUsersAPI = () => {
   });
 };
 
-export { loginApi, getProfileAPI, getAllUsersAPI };
+export { loginApi, registerApi, getProfileAPI, getAllUsersAPI };

@@ -10,9 +10,13 @@ const Login = (props: Props) => {
   const navigator = useNavigate();
   const dispatch = useDispatch();
   const onFinish = async (values: any) => {
-    await dispatch(fetchLogin(values));
-    navigator("/");
-    message.success("login successfully");
+    try {
+      await dispatch(fetchLogin(values));
+      navigator("/");
+      message.success("login successfully");
+    } catch (error: any) {
+      message.error(error.response.data.message);
+    }
   };
   return (
     <div className="login">
@@ -33,7 +37,7 @@ const Login = (props: Props) => {
         </div>
         <Form validateTrigger="onBlur" onFinish={onFinish}>
           <Form.Item
-            label="Username"
+            label="用户名"
             name="username"
             rules={[
               { required: true, message: "Please enter your username." },
@@ -43,21 +47,32 @@ const Login = (props: Props) => {
               //   },
             ]}
           >
-            <Input size="large" placeholder="username" />
+            <Input size="large" placeholder="用户名" />
           </Form.Item>
           <Form.Item
-            label="Password"
+            label="密   码"
             name="password"
             rules={[{ required: true, message: "Please enter your password." }]}
           >
-            <Input type="password" size="large" placeholder="password" />
+            <Input type="password" size="large" placeholder="密码" />
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit" size="large" block>
-              Login
+              登录
             </Button>
           </Form.Item>
         </Form>
+        <Button
+          type="default"
+          htmlType="submit"
+          size="large"
+          block
+          onClick={() => {
+            navigator("/register");
+          }}
+        >
+          注册
+        </Button>
       </Card>
     </div>
   );

@@ -17,9 +17,8 @@ const Profile = (props: Props) => {
 
   return (
     <div>
-      Profile
       <Descriptions
-        title="User Profile"
+        title="Profile"
         bordered
         column={{ xs: 1, sm: 2, md: 3, lg: 3, xl: 4, xxl: 4 }}
         items={items}

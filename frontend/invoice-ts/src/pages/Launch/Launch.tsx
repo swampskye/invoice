@@ -10,7 +10,7 @@ import {
 } from "antd";
 import { InboxOutlined } from "@ant-design/icons";
 // import ReactQuill from "react-quill";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Dragger from "antd/es/upload/Dragger";
 import { useEffect, useState } from "react";
@@ -40,6 +40,7 @@ type ResultsType = {
 const { Option } = Select;
 
 const Launch = (props: Props) => {
+  const navigator = useNavigate();
   const username = useSelector((state: any) => state.user.userInfo.username);
   const [results, setResults] = useState<ResultsType>({
     InvoiceCode: "",
@@ -74,6 +75,7 @@ const Launch = (props: Props) => {
         const data = { ...values, launcher: username, status: "pending" };
         const res = await addOneBillAPI(data);
         message.success("提交成功");
+        navigator("/result");
         console.log(res);
       } catch (error) {
         console.log(error);

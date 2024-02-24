@@ -1,5 +1,5 @@
 import { Dispatch, createSlice } from "@reduxjs/toolkit";
-import { getProfileAPI, loginApi } from "../../apis/user";
+import { getProfileAPI, loginApi, registerApi } from "../../apis/user";
 import {
   getToken as _getToken,
   setToken as _setToken,
@@ -38,6 +38,15 @@ const fetchLogin: any = (credential: any) => {
   };
 };
 
+const fetchRegister: any = (credential: any) => {
+  return async (dispatch: Dispatch) => {
+    console.log(credential);
+    const res = (await registerApi(credential)) as any;
+    // console.log("generate a token", res);
+    // dispatch(setToken(res.token));
+  };
+};
+
 const fetchUserInfo: any = () => {
   return async (dispatch: Dispatch) => {
     const res = (await getProfileAPI()) as any;
@@ -45,5 +54,5 @@ const fetchUserInfo: any = () => {
   };
 };
 
-export { setUserInfo, fetchLogin, clearToken, fetchUserInfo };
+export { setUserInfo, fetchLogin, fetchRegister, clearToken, fetchUserInfo };
 export default userStore.reducer;
