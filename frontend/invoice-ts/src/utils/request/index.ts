@@ -34,12 +34,12 @@ request.interceptors.response.use(
     return response.data;
   },
   (error: any) => {
-    if (error.response.status === 401) {
-      removeToken();
-      router.navigate("/login");
-      window.location.reload();
-      message.error(error.response.data.message);
-    }
+    // if (error.response.status === 401) {
+    //   removeToken();
+    //   router.navigate("/login");
+    //   window.location.reload();
+    //   message.error(error.response.data.message);
+    // }
     return Promise.reject(error);
   }
 );
