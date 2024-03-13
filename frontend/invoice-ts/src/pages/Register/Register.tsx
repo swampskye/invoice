@@ -29,7 +29,7 @@ const Register = (props: Props) => {
     try {
       await dispatch(fetchRegister(values));
       message.success("login successfully");
-      navigator("/login");
+      // navigator("/login");
     } catch (error: any) {
       //   console.log("register failed, reason: ", error.response.data);
       message.error(error.response.data.message);
