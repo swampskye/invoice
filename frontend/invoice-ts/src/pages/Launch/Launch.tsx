@@ -118,6 +118,8 @@ const Launch = (props: Props) => {
         onSuccess("上传成功，请二次检查识别内容后再提交申请");
 
         const tem = {} as ResultsType;
+        console.log(response);
+        console.log(results);
         for (let key in results) {
           tem[key] = response.data.words_result[key];
         }
