@@ -6,7 +6,17 @@ import {
   Modal,
   TableColumnsType,
   message,
+  Image,
+  Space,
 } from "antd";
+import {
+  DownloadOutlined,
+  RotateLeftOutlined,
+  RotateRightOutlined,
+  SwapOutlined,
+  ZoomInOutlined,
+  ZoomOutOutlined,
+} from "@ant-design/icons";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { SearchOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
@@ -163,7 +173,7 @@ const Result = (props: Props) => {
     setOpen(true);
   };
   const changeResult = () => {
-    console.log("changeResult");
+    // console.log("changeResult");
     if (model === "all") {
       setModel("mine");
     } else if (model === "mine") {
@@ -213,6 +223,20 @@ const Result = (props: Props) => {
       }
     };
     rejectBill(currentItem._id);
+  };
+  const onDownload = (src: any) => {
+    fetch(src)
+      .then((response) => response.blob())
+      .then((blob) => {
+        const url = URL.createObjectURL(new Blob([blob]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "image.png";
+        document.body.appendChild(link);
+        link.click();
+        URL.revokeObjectURL(url);
+        link.remove();
+      });
   };
 
   return (
@@ -325,6 +349,38 @@ const Result = (props: Props) => {
         <p>{currentItem.Remarks}</p>
         <p>{currentItem.launcher}</p>
         <p>{currentItem.status}</p>
+        <Image
+          width={200}
+          src={currentItem.imgUrl}
+          preview={{
+            toolbarRender: (
+              _,
+              {
+                transform: { scale },
+                actions: {
+                  onFlipY,
+                  onFlipX,
+                  onRotateLeft,
+                  onRotateRight,
+                  onZoomOut,
+                  onZoomIn,
+                },
+              }
+            ) => (
+              <Space size={12} className="toolbar-wrapper">
+                <DownloadOutlined
+                  onClick={() => onDownload(currentItem.imgUrl)}
+                />
+                <SwapOutlined rotate={90} onClick={onFlipY} />
+                <SwapOutlined onClick={onFlipX} />
+                <RotateLeftOutlined onClick={onRotateLeft} />
+                <RotateRightOutlined onClick={onRotateRight} />
+                <ZoomOutOutlined disabled={scale === 1} onClick={onZoomOut} />
+                <ZoomInOutlined disabled={scale === 50} onClick={onZoomIn} />
+              </Space>
+            ),
+          }}
+        />
       </Modal>
     </div>
   );

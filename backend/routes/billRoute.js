@@ -29,7 +29,8 @@ router.post("/add", async (req, res) => {
       !req.body.InvoiceTag ||
       !req.body.Remarks ||
       !req.body.launcher ||
-      !req.body.status
+      !req.body.status ||
+      !req.body.imgUrl
     ) {
       return res
         .status(400)
@@ -50,6 +51,7 @@ router.post("/add", async (req, res) => {
       Remarks: req.body.Remarks,
       launcher: req.body.launcher,
       status: req.body.status,
+      imgUrl: req.body.imgUrl,
     });
     const bill = await Bill.create(newBill);
     return res.status(201).json(bill);
@@ -63,9 +65,9 @@ router.put("/accept", async (req, res) => {
   try {
     // return res.status(200).json(req.params._id);
     const bill = await Bill.findById(req.query.id);
-    console.log(req);
-    console.log("id", req.query.id);
-    console.log("bill:", bill);
+    // console.log(req);
+    // console.log("id", req.query.id);
+    // console.log("bill:", bill);
 
     if (bill) {
       bill.status = "accepted";
@@ -81,7 +83,7 @@ router.put("/accept", async (req, res) => {
 router.put("/reject", async (req, res) => {
   try {
     const bill = await Bill.findById(req.query.id);
-    console.log(bill);
+    // console.log(bill);
     if (bill) {
       bill.status = "rejected";
       const updatedBill = await bill.save();

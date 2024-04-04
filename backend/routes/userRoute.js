@@ -30,7 +30,7 @@ router.get("/profile", async (req, res) => {
 
 // add a user
 router.post("/one", async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   try {
     if (!req.body.username || !req.body.email || !req.body.password) {
       return res
@@ -46,7 +46,7 @@ router.post("/one", async (req, res) => {
     const user = await User.create(newUser);
     return res.status(201).json(user);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     res.status(500).json({ message: error.message });
   }
 });
@@ -72,7 +72,7 @@ router.post("/login", async (req, res) => {
     });
     return res.status(200).json({ user, token });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     res.status(500).json({ message: error.message });
   }
 });
@@ -107,7 +107,7 @@ router.post("/register", async (req, res) => {
     const createdUser = await User.create(newUser);
     return res.status(201).json(createdUser);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     res.status(500).json({ message: error.message });
   }
 });

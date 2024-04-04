@@ -58,6 +58,10 @@ const billSchema = new mongoose.Schema(
       type: String,
       requeired: true,
     },
+    imgUrl: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,

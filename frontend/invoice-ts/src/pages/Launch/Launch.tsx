@@ -42,6 +42,7 @@ const { Option } = Select;
 const Launch = (props: Props) => {
   const navigator = useNavigate();
   const username = useSelector((state: any) => state.user.userInfo.username);
+  const [imgUrl, setImgUrl] = useState("");
   const [results, setResults] = useState<ResultsType>({
     InvoiceCode: "",
     InvoiceNum: "",
@@ -59,6 +60,7 @@ const Launch = (props: Props) => {
     InvoiceType: "",
     InvoiceTag: "",
     Remarks: "",
+    // Url: "",
   });
   const [form] = Form.useForm();
   useEffect(() => {
@@ -72,7 +74,12 @@ const Launch = (props: Props) => {
     console.log("Received values of form: ", values);
     const submit = async () => {
       try {
-        const data = { ...values, launcher: username, status: "pending" };
+        const data = {
+          ...values,
+          launcher: username,
+          status: "pending",
+          imgUrl: imgUrl,
+        };
         const res = await addOneBillAPI(data);
         message.success("提交成功");
         navigator("/result");
@@ -98,6 +105,7 @@ const Launch = (props: Props) => {
     try {
       const { file, onSuccess } = props;
       const img = await getBase64(file);
+      setImgUrl(img);
       // 自定义请求头等配置
       const headers = {
         Accept: "application/json",
@@ -108,7 +116,7 @@ const Launch = (props: Props) => {
         {
           image: img,
           access_token:
-            "Bearer 24.beb4e1f87ec124f348ca6a98f540b358.2592000.1712028280.282335-48129502",
+            "Bearer 24.96f24d5d73c93a8737aa33b01f7170ef.2592000.1714789874.282335-48129502",
         },
         { headers }
       );
