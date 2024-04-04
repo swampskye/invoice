@@ -115,8 +115,7 @@ const Launch = (props: Props) => {
         "https://aip.baidubce.com/rest/2.0/ocr/v1/vat_invoice",
         {
           image: img,
-          access_token:
-            "Bearer 24.96f24d5d73c93a8737aa33b01f7170ef.2592000.1714789874.282335-48129502",
+          access_token: "your token",
         },
         { headers }
       );
