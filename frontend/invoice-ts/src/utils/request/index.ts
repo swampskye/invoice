@@ -10,7 +10,7 @@ import { message } from "antd";
 // 3. interceptor
 
 const request = axios.create({
-  baseURL: "http://localhost:9999",
+  baseURL: "http://13.57.230.156:9999",
   timeout: 5000,
 });
 
