@@ -1,4 +1,5 @@
 import express from "express";
+import bodyParser from "body-parser";
 import { PORT, mongoDBURL } from "./config.js";
 import mongoose from "mongoose";
 import billRouter from "./routes/billRoute.js";
@@ -21,6 +22,10 @@ app.use(
   })
 );
 app.use(verifyToken);
+
+// const bodyParser = require("body-parser");
+app.use(bodyParser.json({ limit: "5mb" }));
+app.use(bodyParser.urlencoded({ limit: "5mb", extended: true }));
 
 // routes
 app.use("/bill", billRouter);

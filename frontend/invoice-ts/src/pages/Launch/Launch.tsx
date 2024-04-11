@@ -12,6 +12,7 @@ import { InboxOutlined } from "@ant-design/icons";
 // import ReactQuill from "react-quill";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { luanchAPI } from "../../apis/bill";
 import Dragger from "antd/es/upload/Dragger";
 import { useEffect, useState } from "react";
 import TextArea from "antd/es/input/TextArea";
@@ -106,19 +107,21 @@ const Launch = (props: Props) => {
       const { file, onSuccess } = props;
       const img = await getBase64(file);
       setImgUrl(img);
-      // 自定义请求头等配置
-      const headers = {
-        Accept: "application/json",
-        "Content-Type": "application/x-www-form-urlencoded",
-      };
-      const response = await axios.post(
-        "https://aip.baidubce.com/rest/2.0/ocr/v1/vat_invoice",
-        {
-          image: img,
-          access_token: "your token",
-        },
-        { headers }
-      );
+      const response = await luanchAPI(img);
+      // // 自定义请求头等配置
+      // const headers = {
+      //   Accept: "application/json",
+      //   "Content-Type": "application/x-www-form-urlencoded",
+      // };
+      // const response = await axios.post(
+      //   "https://aip.baidubce.com/rest/2.0/ocr/v1/vat_invoice",
+      //   {
+      //     image: img,
+      //     access_token:
+      //       "Bearer 24.96f24d5d73c93a8737aa33b01f7170ef.2592000.1714789874.282335-48129502",
+      //   },
+      //   { headers }
+      // );
       // 上传成功后调用 onSuccess
       if (response.data.words_result !== undefined) {
         console.log("words_result in response.data ");
